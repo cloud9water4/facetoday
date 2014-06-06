@@ -9,10 +9,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   select song_num, title,singer,source,release from songs 
 	   order by release desc
 	</select>
-	<select id="songSelectByWeather" resultType="songVo">
-	    select title,singer,release from songs
+	<select id="songSelectByWeather" parameterType="String"   resultType="songVo">
+	    select song_num, title,singer,source,release from songs
 	    where weather=#{weather}
-	    order by release desc limit10
+	    order by release desc limit 11
+	</select>
+	<select id="songSelectByState" parameterType="MemberVo" resultType="songVo">
+	  select song_num, title,singer,source,release from songs
+	  WHERE <![CDATA[state <= 
+	  (SELECT AVG(state) FROM boards where email=#{email} and social=#{social} ORDER BY board_num DESC LIMIT 3)]]>
+	  LIMIT 11
 	</select>
 	
 	<insert id="createList" parameterType="songListVo">
@@ -33,4 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="userlistAll" parameterType="memberVo" resultType="songListVo">
 		SELECT * FROM songList WHERE email=#{email} AND social=#{social} AND list_name NOT IN('최근 들은 음악')
 	</select>
+	<delete id="deleteList" parameterType="int">
+		delete from songList where list_num = #{list_num}
+	</delete>
 </mapper>

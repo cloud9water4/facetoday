@@ -16,10 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import facetoday.spring.service.BoardService;
+import facetoday.spring.service.SongService;
 import facetoday.spring.web.vo.BoardJoinMemberVo;
 import facetoday.spring.web.vo.BoardVo;
 import facetoday.spring.web.vo.ImageVo;
 import facetoday.spring.web.vo.MemberVo;
+import facetoday.spring.web.vo.SongListVo;
 
 @Controller
 public class BoardController {
@@ -27,6 +29,8 @@ public class BoardController {
 	
 	@Resource(name="boardService")
 	private BoardService boardService;
+	@Resource(name="SongService")
+	private SongService songService;
 	
 	@RequestMapping("/insert.do")
 	@ResponseBody
@@ -182,12 +186,41 @@ public class BoardController {
 	public ModelAndView myPageShift(MemberVo vo) {
 		ModelAndView mv = new ModelAndView();
 		List<BoardVo> list = null;
+		List<SongListVo> userlist = null;
 		
 		try {
 			list = boardService.selectImage(vo);
-			
+			userlist = songService.userlistAll(vo);
 			mv.setViewName("/main");
 			mv.addObject("imageList",list);
+			mv.addObject("userlist",userlist);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			mv.setViewName("/error");
+			mv.addObject("message",e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("/error");
+			mv.addObject("message",e.getMessage());
+		}
+				
+		return mv;
+	}
+	
+	@RequestMapping("/deleteUserlist.do")
+	public ModelAndView myPageShift(MemberVo vo, int list_num) {
+		ModelAndView mv = new ModelAndView();
+		List<BoardVo> list = null;
+		List<SongListVo> userlist = null;
+		
+		
+		try {
+			songService.deleteList(list_num);
+			list = boardService.selectImage(vo);
+			userlist = songService.userlistAll(vo);
+			mv.setViewName("/main");
+			mv.addObject("imageList",list);
+			mv.addObject("userlist",userlist);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			mv.setViewName("/error");

@@ -17,6 +17,9 @@ public interface SongService {
 	 */
 	List<SongVo> selectAll() throws SQLException;
 	
+	String songSelectByWeather(String weather) throws SQLException;
+	String songSelectByState(MemberVo vo) throws SQLException;
+
 	String checkSong(@RequestParam("check") String check);
 	List NaverList() throws IOException;
 	
@@ -24,4 +27,5 @@ public interface SongService {
 	boolean userList(SongListVo vo) throws SQLException;
 	
 	List<SongListVo> userlistAll(MemberVo vo) throws SQLException;
+	boolean deleteList(int list_num) throws SQLException;
 }

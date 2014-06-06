@@ -15,18 +15,10 @@
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/offcanvas.css" rel="stylesheet">
+
+<script src="http://www.google.com/jsapi"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>
-	google.load("webfont", "1");
-	google.setOnLoadCallback(function() {
-		WebFont.load({
-			custom : {
-				families : [ "NanumPen" ],
-				 urls: [ "http://fontface.kr/NanumPen/css" ]
-			}
-		});
-	});
-</script>
+
 <style>
 #SideObj{
 position: fixed;
@@ -43,13 +35,48 @@ top:75%;
 margin-left:-640px;
 text-align:center;
 width:170px;}
-
-h4 {
-	font-family: 'NanumPen';
-}
 </style>
+
 <script type="text/javascript">
- 
+$(document).ready(function() {
+	//실시간 위치 추적/ 바뀌는 IP에 한해 // 날씨
+	var lat,lon;
+	var nation=null;
+	var country=null;
+	var state=null;
+	var updateInfo=null;
+	var wind=null;
+	var temp=null;
+	var humidity=null;
+	var ultraViolet=null;
+	
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showPosition);
+	} else {
+		alert("실시간 위치 정보를 지원하지 않는 브라우저를 사용 중입니다.");
+	}
+	
+	function showPosition(position) {
+		lat = position.coords.latitude;
+		lon = position.coords.longitude;	
+		getWeatherInto(lat,lon);
+	}
+	
+	function getWeatherInto(lat,lon){
+		  $.ajax({
+			  // 결과를 한글로 받을 수 있다.
+			  url : "http://api.wunderground.com/api/2d769320347dd67c/geolookup/conditions/lang:KR/q/"+lat+","+lon+".json",
+			  dataType : "jsonp",
+			  success : function weather(parsed_json) {
+				  var observ = parsed_json.current_observation;			
+				  var state=observ.weather;
+				$('#weather').attr('value',state);
+
+				}
+		  });
+	 }
+});
+
  jQuery.fn.alternateRowColors = function() {
    $('tbody tr:odd', this)
      .removeClass('even').addClass('odd');
@@ -262,6 +289,15 @@ h4 {
 	</div>
 	
 	<div class="col-md-8">
+	<form action="proposelist.do" method="post">
+			<button class="btn btn-link" type="submit"><h6>날씨에 따른 음악 추천</h6></button>
+			<input type="hidden" value="" name="weather" id="weather">
+	</form>
+	<form action="proposelistEmotion.do" method="post">
+		<button class="btn btn-link" type="submit"><h6>기분에 따른 음악 추천</h6></button>
+		<input type="hidden" name="email" id="email" value="${sessionScope.userInfo.email}">
+		<input type="hidden" name="social" id="social" value="${sessionScope.userInfo.social}">
+	</form>
 	<form name="songForm" method="post" action="check.do" onSubmit='return checkValid()'>
 		
 		<table class="table table-bordered table-striped sortable paginated">
@@ -318,18 +354,16 @@ h4 {
 							type=submit value="듣기"></a> <input type=reset value="다시선택하기"></span></b></td>
 		</tr>
 		
-		<div id="SideObj">
-			<h6>날씨에 따른 설정</h6> 
-			<h6>기분에 따른 설정</h6>
+		<div id="SideObj"> 
 			<iframe id="preview" width="410" height="320" src="//www.youtube.com/embed/?feature=player_embedded&autoplay=1&autohide=1&loop=1&playlist="> </iframe>
 			<button class="btn btn-info" type="submit" style="width: 410px;">새로운 사용자 음악 목록 만들기</button>
 			<input type="text" class="form-control" id="listAdd" name="list_name" placeholder="ex)등굣길 들을 노래" style="width: 410px;"> 
 		</div>
 	
 	</form>
-	</div>
-		
+
 		<div id="Sidelist">
+		
 			<h6>사용자 노래 리스트</h6>
 			<c:forEach items="${requestScope.userlist}" var="userlist">
 				<form action="userlistPlay.do" method="post">

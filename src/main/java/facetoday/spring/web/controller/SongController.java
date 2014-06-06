@@ -1,6 +1,7 @@
 package facetoday.spring.web.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class SongController {
 	public ModelAndView checkSong(@RequestParam("check") String check, String email, String social, String list_name) {
 		String sources = songService.checkSong(check);
 		ModelAndView mv = new ModelAndView();
-		HttpSession session = null;
+
 		boolean createList = false;
 		SongListVo vo = new SongListVo(email,social,sources,list_name);
 		
@@ -69,7 +70,43 @@ public class SongController {
 	
 		return mv;
 	}
+	
+	//날씨에 따른 추천
+	@RequestMapping(value = "/proposelist.do")
+	public ModelAndView proposelist(String weather) {
+		String sources = null;
+		ModelAndView mv = new ModelAndView();
+	
+		try {
+			sources = songService.songSelectByWeather(weather);
+			mv.setViewName("/news");
+			mv.addObject("check", sources);
+		} catch (SQLException e) {
+			mv.setViewName("/error");
+			mv.addObject("message", e.getMessage());
+		}
+	
+		return mv;
+	}
+	//날씨에 따른 추천
+	@RequestMapping(value = "/proposelistEmotion.do")
+	public ModelAndView proposelist(MemberVo vo) {
+		String sources = null;
+		ModelAndView mv = new ModelAndView();
+	
+		try {
+			sources = songService.songSelectByState(vo);
+			mv.setViewName("/news");
+			mv.addObject("check", sources);
+		} catch (SQLException e) {
+			mv.setViewName("/error");
+			mv.addObject("message", e.getMessage());
+		}
+	
+		return mv;
+	}
 
+		
 	@RequestMapping(value = "/naverList.do")
 	public ModelAndView naverList() {
 		ModelAndView mv = new ModelAndView();

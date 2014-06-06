@@ -19,6 +19,8 @@ public class SongDaoImpl implements SongDao {
 		try {
 			session = DBUtil.getSqlSession();
 			list = session.selectList("song.songSelect");
+			
+			System.out.println(list.get(0).getSource());
 		} finally {
 			DBUtil.closeSqlSession(session);
 		}
@@ -32,14 +34,26 @@ public class SongDaoImpl implements SongDao {
 		List<SongVo> list = null;
 		try {
 			session = DBUtil.getSqlSession();
-			list = session.selectOne("song.songSelectByWeather", weather);
+			list = session.selectList("song.songSelectByWeather", weather);
 
 		} finally {
 			DBUtil.closeSqlSession(session);
 		}
 		return list;
 	}
-
+	
+	@Override
+	public List<SongVo> songSelectByState(MemberVo vo) throws SQLException {
+		SqlSession session = null;
+		List<SongVo> list = null;
+		try {
+			session = DBUtil.getSqlSession();
+			list = session.selectList("song.songSelectByState",vo);
+		} finally {
+			DBUtil.closeSqlSession(session);
+		}
+		return list;
+	}
 	@Override
 	public boolean createList(SongListVo vo) throws SQLException {
 		// TODO Auto-generated method stub
@@ -104,5 +118,21 @@ public class SongDaoImpl implements SongDao {
 			DBUtil.closeSqlSession(session);
 		}
 		return list;
+	}
+	
+	@Override
+	public boolean deleteList(int list_num) throws SQLException {
+		SqlSession session = null;
+		boolean commit = false;
+		int result = 0;
+		try {
+			session = DBUtil.getSqlSession();
+			result = session.delete("song.deleteList", list_num);
+			commit = result > 0 ? true : false;
+		} finally {
+			DBUtil.closeSqlSession(session, commit);
+		}
+		
+		return commit;
 	}
 }

@@ -85,4 +85,37 @@ public class SongServiceImpl implements SongService {
 		// TODO Auto-generated method stub
 		return songDao.userlistAll(vo);
 	}
+
+	@Override
+	public String songSelectByWeather(String weather) throws SQLException {
+		List<SongVo> list = songDao.songSelectByWeather(weather); 
+		
+		String sources = list.get(0).getSource()+",";
+		
+		for (int i = 1; i<list.size()-1; i++) {
+			sources = sources + list.get(i).getSource()+",";
+		}
+		
+		return sources;
+	}
+	
+	@Override
+	public String songSelectByState(MemberVo vo) throws SQLException {
+		List<SongVo> list = songDao.songSelectByState(vo);
+		String sources = list.get(0).getSource()+",";
+		for (int i = 1; i<list.size()-1; i++) {
+			sources = sources + list.get(i).getSource()+",";
+		}
+		return sources;
+	}
+	
+	@Override
+	public boolean deleteList(int list_num) throws SQLException {
+		boolean result = songDao.deleteList(list_num);
+		
+		if(!result)
+			throw new SQLException("리스트가 삭제되지 않았습니다.");
+		
+		return result;
+	}
 }

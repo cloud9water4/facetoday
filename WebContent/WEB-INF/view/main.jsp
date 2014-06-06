@@ -35,15 +35,6 @@
 <script src="http://www.google.com/jsapi"></script>
 <script type="text/javascript" src="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&key=4679e9c92b6f93a47f0bf47d24df517a"></script>
 
-<script>
- google.load( "webfont", "1" );
- google.setOnLoadCallback(function() {
-  WebFont.load({ custom: {
-   families: [ "NanumBrush" ],
-   urls: [ "http://fontface.kr/NanumBrush/css" ]
-  }});
- });
-</script>
 
 <style>
 /* 로딩 중 영역 스타일  */
@@ -61,10 +52,6 @@
 	float: left;
 }
 
-.well a {
-	font-family: 'NanumBrush';
-}
-
 img.bg {
 	min-height: 100%;
 	min-width: 1024px;
@@ -78,6 +65,7 @@ img.bg {
 </style>
 
 <script type="text/javascript">
+
 	var confirmArray = new Array();
 	$(document).ready(function(){
 		//글 등록
@@ -680,7 +668,7 @@ img.bg {
 					<span class="icon-bar"></span> <span class="icon-bar"></span> 
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"> <span
+				<a class="navbar-brand" href="javascript:history.back()"> <span
 					class="glyphicon glyphicon-globe"></span> FaceToday
 				</a>
 			</div>
@@ -874,8 +862,32 @@ img.bg {
 			
 			
 			<div class="col-md-2">
-			<iframe width="220" height="180"
-					src="//www.youtube.com/embed/OxgiiyLp5pk?feature=player_embedded&autoplay=0&autohide=1&loop=1&playlist=0Oi8jDMvd_w,FSRUr6TZxQY,b_8FCSt3zNw,OxgiiyLp5pk" frameborder="0" allowfullscreen> </iframe>
+			<iframe id="music" width="220" height="180"
+					src="//www.youtube.com/embed/?feature=player_embedded&autoplay=0&autohide=1&loop=1&playlist"> </iframe>
+			
+			
+			<h5><span class="glyphicon glyphicon-music"></span>사용자 지정 노래 목록</h5>
+			<script type="text/javascript">
+			function play(sources) {
+				 $('#music').attr('src',"//www.youtube.com/embed/?feature=player_embedded&autoplay=1&autohide=1&loop=1&playlist="+sources);
+			}
+			
+			</script>
+			<table class="table table-bordered table-striped">
+			<c:forEach items="${requestScope.userlist}" var="userlist">
+				<tr>
+				<td><h6 onclick="play('${userlist.sources}')">${userlist.list_name}</h6></td>
+				<td>
+				<form action="deleteUserlist.do" method="post">
+					<input type="hidden" name="email" id="email" value="${sessionScope.userInfo.email}">
+					<input type="hidden" name="social" id="social" value="${sessionScope.userInfo.social}">
+					<input type="hidden" name="list_num" id="list_num" value="${userlist.list_num}">
+					<button class="btn btn-link" type="submit"><span class="glyphicon glyphicon-minus"></span></button>
+				</form>
+				</td>
+				</tr>	
+			</c:forEach>
+			</table>
 			</div>
 
 		</div>

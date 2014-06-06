@@ -22,8 +22,10 @@ public interface SongDao {
 	 */
 	
 	List<SongVo> songSelectByWeather(String weather) throws SQLException;
+	List<SongVo> songSelectByState(MemberVo vo) throws SQLException;
 	
 	boolean createList(SongListVo vo) throws SQLException;
 	boolean userList(SongListVo vo) throws SQLException;
 	List<SongListVo> userlistAll(MemberVo vo) throws SQLException;
+	boolean deleteList(int list_num) throws SQLException;
 }

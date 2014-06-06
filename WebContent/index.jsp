@@ -312,7 +312,7 @@ img.bg {
 					<li>&middot;</li>
 					<li><a href="https://github.com/twbs/bootstrap">GitHub</a></li>
 					<li>&middot;</li>
-					<li><a href="../getting-started/#examples">Examples</a></li>
+					<li><a href="../getting-started/#examples">Yobi</a></li>
 					<li>&middot;</li>
 					<li><a href="../2.3.2/">v2.3.2 docs</a></li>
 					<li>&middot;</li>
