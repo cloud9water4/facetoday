@@ -1,0 +1,46 @@
+package facetoday.spring.web.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import facetoday.spring.web.vo.BoardVo;
+import facetoday.util.DBUtil;
+
+public class BoardDaoImpl implements BoardDao {
+
+	@Override
+	public int boardInsert(BoardVo vo) {
+		// TODO Auto-generated method stub
+		SqlSession session = null;
+		
+		boolean commit = false;
+		int result;
+		
+		try {
+			session = DBUtil.getSqlSession();
+			result = session.insert("board.boardInsert",vo);
+			commit = result > 0 ? true : false;
+		} finally {
+			DBUtil.closeSqlSession(session, commit);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<BoardVo> boardSelectAll() {
+		// TODO Auto-generated method stub
+		SqlSession session = null;
+		List<BoardVo> list = null;
+		
+		try {
+			session = DBUtil.getSqlSession();
+			list = session.selectList("board.boardSelectAll");
+		} finally {
+			DBUtil.closeSqlSession(session);
+		}
+		
+		return list;
+	}
+}

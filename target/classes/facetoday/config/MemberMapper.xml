@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	
+	<!-- 멤버 관련 -->
+	
+	<!-- 회원가입 default -->
+	<insert id="insertMember" parameterType="memberVo">
+		insert into Members values (#{email},#{name},#{passwd},#{birth},#{social})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="String"  resultType="memberVo">
+		select * from members where email=#{email} and social='origin'
+	</select>
+	
+	<!-- 모든 멤버 출력 -->
+	<select id="selectAllMember"  parameterType="String" resultType="MemberVo">
+		select * from members where email not in(#{email})
+	</select>
+	
+	<!-- 이메일 체크 -->
+	<select id="emailCheck" parameterType="String" resultType="memberVo">
+		SELECT email, social FROM MEMBERS WHERE email=#{email} and social='facebook'
+	</select>
+	
+	<!-- 최근 들은 노래 목록 추출 -->
+	<select id="recentList" parameterType="MemberVo" resultType="String">
+		SELECT sources from SongList where email=#{email} and social=#{social} and list_name='최근 들은 음악';
+	</select>
+	
+	<!-- 친구 찾기 -->
+	<select id="searchUser" parameterType="friendsVo" resultType="memberVo">
+		select email, name, birth, social from members 
+		<if test="name!=null">
+			WHERE name=#{name} AND email NOT IN
+			(SELECT emailFriend FROM friends WHERE email=#{email} AND social=#{social})		
+		</if>
+		<if test="emailFriend!=null">
+			WHERE email=#{emailFriend} AND email NOT IN
+			(SELECT emailFriend FROM friends WHERE email=#{email} AND social=#{social})	
+		</if>
+	</select>
+	
+	<!-- 친구 추가하기 -->
+	<insert id="addFriend" parameterType="friendsVo">
+		insert into friends values(#{emailFriend},#{socialFriend},#{email},#{social})
+	</insert>
+	
+	<!-- 나를 추가한 친구가 있는지 살펴보기 -->
+	<select id="checkFollower" parameterType="memberVo" resultType="friendsVo">
+		SELECT email,social FROM friends WHERE emailfriend =#{email} AND email NOT IN(SELECT email FROM friends WHERE email=#{email} AND social=#{social}) 
+	</select>
+</mapper>

@@ -1,0 +1,30 @@
+
+3월 24일 수정.
+
+CREATE TABLE MEMBER (
+	NAME VARCHAR(30) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	passwd VARCHAR(20) NOT NULL,
+	birth VARCHAR(20) NOT NULL,
+	
+	PRIMARY KEY(email)
+)
+
+CREATE TABLE board (
+	email VARCHAR(100) NOT NULL,
+	board_num INT AUTO_INCREMENT,
+	write_date VARCHAR(30) NOT NULL,
+	content	VARCHAR(1000) NOT NULL,
+	tag VARCHAR(50),
+	pic_name VARCHAR(1000),
+	gps VARCHAR(100),
+	
+	PRIMARY KEY(board_num),
+	FOREIGN KEY(email) REFERENCES MEMBER(email)
+)
+
+ex)
+INSERT INTO MEMBER VALUES ('정동구','wesdw2002@naver.com','cloud','1991-02-20');
+INSERT INTO board VALUES ('wesdw2002@naver.com',NULL,SYSDATETIME,'아 기분이 별로 안 좋다. 짜파게티 먹고싶다.',null,null,null);
+
+

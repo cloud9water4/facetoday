@@ -1,0 +1,19 @@
+package facetoday.spring.service;
+
+import java.util.List;
+
+import facetoday.spring.web.vo.BoardVo;
+
+public interface BoardService {
+	
+	
+	/*
+	 * content 작성
+	 */
+	int contentInsert(BoardVo vo);
+	
+	/*
+	 * content 담벼락 구성하기
+	 */
+	List<BoardVo> contentSelectAll();
+}

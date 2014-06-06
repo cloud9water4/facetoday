@@ -1,0 +1,24 @@
+package facetoday.spring.web.dao;
+
+import java.util.List;
+
+import facetoday.spring.web.vo.BoardVo;
+
+public interface BoardDao {
+	
+	/**
+	 *  글 작성
+	 */
+	int boardInsert(BoardVo vo);
+	
+	/**
+	 * 모든 글 검색해서 뿌리기(담벼락)
+	 */
+	List<BoardVo> boardSelectAll();
+	
+	/**
+	 *  글 삭제하기
+	 */
+	int boardDelete(String content);
+	
+}

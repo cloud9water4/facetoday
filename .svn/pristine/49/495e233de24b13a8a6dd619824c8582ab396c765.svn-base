@@ -1,0 +1,46 @@
+package facetoday.spring.web.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import facetoday.spring.web.vo.BoardVo;
+import facetoday.spring.web.vo.MemberVo;
+import facetoday.spring.web.vo.MorphologyVo;
+
+public interface BoardDao {
+	
+	/**
+	 *  글 작성
+	 */
+	int boardInsert(BoardVo vo);
+	
+	/**
+	 * 모든 글 검색해서 뿌리기(담벼락)
+	 */
+	List<BoardVo> boardSelectAll();
+	
+	/**
+	 *  글 삭제하기
+	 */
+	int boardDelete(int board_num);
+	
+	/**
+	 * 글 수정하기
+	 */
+	int boardUpdate(BoardVo boardVo);
+	
+	/**
+	 * 형태소 목록
+	 */
+	List<MorphologyVo> MorphologyList() throws SQLException;
+	
+	/**
+	 * 회원 가입
+	 */
+	int memberInsert(MemberVo memberVo) throws SQLException;
+	
+	/**
+	 * 로그인
+	 */
+	List<MemberVo> login(String email) throws SQLException;
+}

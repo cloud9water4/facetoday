@@ -1,0 +1,43 @@
+CREATE TABLE member (
+	email VARCHAR(100) PRIMARY KEY,
+	NAME VARCHAR(30) NOT NULL,
+	passwd VARCHAR(20) NOT NULL,
+	birth VARCHAR(20) NOT null
+)
+
+CREATE TABLE board (
+	board_num INT PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(100) FOREIGN KEY REFERENCES MEMBER(email),
+	write_date VARCHAR(30) NOT NULL,
+	content VARCHAR(1000) NOT NULL,
+	tag VARCHAR(50),
+	filename VARCHAR(1000),
+	location VARCHAR(100),
+	state int
+)
+
+CREATE TABLE comment (
+	comment_num INT PRIMARY KEY AUTO_INCREMENT,
+	board_num INT FOREIGN KEY REFERENCES board(board_num),
+	NAME VARCHAR(30) NOT NULL,
+	write_date VARCHAR(30) NOT NULL,
+	content VARCHAR(500) NOT NULL
+)
+
+CREATE TABLE config (
+	profile VARCHAR(1000) NOT NULL,
+	email VARCHAR(100) FOREIGN KEY REFERENCES MEMBER(email),
+	gender INT,
+	nation VARCHAR(30),
+	location VARCHAR(30),
+	university VARCHAR(30),
+	preference VARCHAR(200),
+	singer VARCHAR(200),
+	
+	PRIMARY KEY(profile, email)
+)
+
+CREATE TABLE friend (
+	email2 VARCHAR(100) PRIMARY KEY,
+	email VARCHAR(100) FOREIGN KEY REFERENCES MEMBER(email)
+)

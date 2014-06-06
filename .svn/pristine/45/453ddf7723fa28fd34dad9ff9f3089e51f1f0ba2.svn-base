@@ -1,0 +1,68 @@
+package facetoday.spring.web.vo;
+
+public class BoardVo {
+	
+	private int board_num;
+	private String email;
+	private String write_date;
+	private String content;
+	private String tag;
+	private String filename;
+	private String location;
+	private int state;
+	
+	public BoardVo(){}
+	
+	public BoardVo(int boardNum, String content){
+		this.board_num = boardNum;
+		this.content = content;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
+	public String getWrite_date() {
+		return write_date;
+	}
+	public void setWrite_date(String write_date) {
+		this.write_date = write_date;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+	public String getPic_name() {
+		return filename;
+	}
+	public void setPic_name(String pic_name) {
+		this.filename = pic_name;
+	}
+	public String getGps() {
+		return location;
+	}
+	public void setGps(String gps) {
+		this.location = gps;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+}

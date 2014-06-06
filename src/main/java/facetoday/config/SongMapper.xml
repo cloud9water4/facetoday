@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="song">	
+	<select id="songSelect"  resultType="songVo"  >
+	   select song_num, title,singer,source,release from songs 
+	   order by release desc
+	</select>
+	<select id="songSelectByWeather" resultType="songVo">
+	    select title,singer,release from songs
+	    where weather=#{weather}
+	    order by release desc limit10
+	</select>
+	
+	<insert id="createList" parameterType="songListVo">
+		insert into SongList values(#{email},#{social},null,#{sources},'최근 들은 음악')
+	</insert>
+	<update id="updateList" parameterType="songListVo">
+		update SongList set sources = #{sources} where email=#{email} and social=#{social} and list_name='최근 들은 음악'
+	</update>
+	<select id="userListCheck" parameterType="SongListVo" resultType="String">
+		SELECT sources from SongList where email=#{email} and social=#{social} and list_name=#{list_name};
+	</select>
+	<update id="userListUpdate" parameterType="SongListVo">
+		update SongList set sources = #{sources} where email=#{email} and social=#{social} and list_name=#{list_name}
+	</update>
+	<insert id="userList" parameterType="songListVo">
+		insert into SongList values(#{email},#{social},null,#{sources},#{list_name})
+	</insert>
+	<select id="userlistAll" parameterType="memberVo" resultType="songListVo">
+		SELECT * FROM songList WHERE email=#{email} AND social=#{social} AND list_name NOT IN('최근 들은 음악')
+	</select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<!-- 글 등록 -->
+	<insert id="boardInsert" parameterType="boardVo">
+		INSERT INTO board VALUES ('wesdw2002@naver.com',null,SYSDATETIME,#{content},#{tag},#{pic_name},#{gps});
+	</insert>
+	
+	<!-- 글 전체 출력 -->
+	<select id="boardSelectAll" resultType="boardVo">
+		select * from
+		board where email='wesdw2002@naver.com' order by board_num DESC
+	</select>
+	
+	<!-- 글 삭제 -->
+	<delete id="boardDelete" parameterType="String">
+		delete from board where content = #{content}
+	</delete>
+	
+</mapper>

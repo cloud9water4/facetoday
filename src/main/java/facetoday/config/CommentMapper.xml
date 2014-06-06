@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comment"> 
+	<insert id="commentInsert" parameterType="commentVo">
+		INSERT INTO COMMENTS VALUES(null,#{board_num},#{email},#{social},#{name},current_timestamp,#{content});
+	</insert>
+	
+	<select id="extractName" parameterType="commentVo" resultType="String">
+		select name from members where email=#{email} and social=#{social}
+	</select>
+	
+	<update id="commentInsertCount" parameterType="int">
+		UPDATE boards SET c_num = c_num+1 WHERE board_num = #{board_num}
+	</update>
+	
+	<select id="commentView" parameterType="int" resultType="commentVo">
+		SELECT * FROM COMMENTS WHERE BOARD_NUM=#{BOARD_NUM}
+	</select>
+	<select id="commentCount" parameterType="int" resultType="Integer">
+		select COUNT(comment_num) from comments where comment_num=#{comment_num}
+	</select>
+</mapper>

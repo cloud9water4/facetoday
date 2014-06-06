@@ -1,0 +1,39 @@
+package facetoday.spring.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import facetoday.spring.web.dao.BoardDao;
+import facetoday.spring.web.vo.BoardVo;
+
+public class BoardServiceImpl implements BoardService {
+
+	@Resource(name="boardDao")
+	private BoardDao boardDao;
+	
+	/**
+	 * 글 저장
+	 */
+	@Override
+	public int boardInsert(BoardVo vo) {
+		// TODO Auto-generated method stub
+		return boardDao.boardInsert(vo);
+	}
+
+	/**
+	 * 저장된 글 담벼락 구성
+	 */
+	@Override
+	public List<BoardVo> boardSelectAll() {
+		// TODO Auto-generated method stub
+		return boardDao.boardSelectAll();
+	}
+	
+	/**
+	 * 해당 글 삭제하기
+	 */
+	public int boardDelete(String content) {
+		return boardDao.boardDelete(content);
+	}
+}

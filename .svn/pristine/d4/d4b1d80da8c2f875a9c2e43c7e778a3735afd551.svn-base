@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<!-- viewResolver 등록하기 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view"/>
+		<property name="suffix" value=".jsp"/>
+		<property name="order" value="1"/>
+	</bean>
+	
+	<!-- 컨트롤러 자동 스캔 설정 -->
+	<context:component-scan base-package="facetoday.spring.web.controller"/>
+	
+	<!-- 객체 생성 -->
+	<bean class="facetoday.spring.service.BoardServiceImpl" id="boardService"/>
+	<bean class="facetoday.spring.web.dao.BoardDaoImpl" id="boardDao"/>
+	
+	<!-- Json 등록 -->
+	<bean class="net.sf.json.spring.web.servlet.view.JsonView"   id="jsonView">
+   		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"  id="viewResolver">
+  		<property name="order" value="0"/>
+	</bean>
+	
+</beans>

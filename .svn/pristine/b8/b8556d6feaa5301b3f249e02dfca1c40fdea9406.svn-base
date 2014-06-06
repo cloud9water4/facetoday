@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<insert id="boardInsert" parameterType="boardVo">
+		INSERT INTO board VALUES ('wesdw2002@naver.com',null,SYSDATETIME,#{content},#{tag},#{pic_name},#{gps});
+	</insert>
+
+	<select id="boardSelectAll" resultType="boardVo">
+		select * from
+		board where email='wesdw2002@naver.com'
+	</select>
+</mapper>

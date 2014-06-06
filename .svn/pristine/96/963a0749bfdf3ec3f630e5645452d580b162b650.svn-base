@@ -1,0 +1,80 @@
+package facetoday.spring.web.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import facetoday.spring.service.BoardService;
+import facetoday.spring.web.vo.BoardVo;
+
+@Controller
+public class BoardController {
+	private int updSupport_boardNum;
+	
+	@Resource(name="boardService")
+	private BoardService boardService;
+	
+	@RequestMapping("/insert.do")
+	@ResponseBody
+	public String insertBoard(BoardVo boardVo) {
+		System.out.println("글쓰기 요청 완료");
+		String re = "0";
+		
+		int result = boardService.boardInsert(boardVo);
+		if(result > 0) re ="1";
+		
+		return re;
+	}
+	
+	@RequestMapping("/select.do")
+	public ModelAndView selectBoardAll() {
+		List<BoardVo> list = boardService.boardSelectAll();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list",list);
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+	@RequestMapping("/delete.do")
+	@ResponseBody
+	public String deleteBoard(int board_num) {
+		String re = "0";
+		
+		//console 확인용
+		System.out.println("지울 글 번호:"+board_num);
+		
+		if(boardService.boardDelete(board_num)>0)
+			re="1";
+		
+		return re;
+	}
+	
+	@RequestMapping("/update.do")
+	@ResponseBody
+	public String updateBoard(String updateContent) {
+		String re = "0";
+		
+		//console 확인용
+		System.out.println("수정할 글 내용 및 번호:"+updateContent+","+updSupport_boardNum);
+		
+		BoardVo boardVo = new BoardVo(updSupport_boardNum,updateContent);
+		
+		if(boardService.boardUpdate(boardVo)>0)
+			re="1";
+		
+		return re;
+	}
+	
+	@RequestMapping("/updateSupport.do")
+	public void updateSupport(int board_num) {
+		//console 확인 및 modal 글 번호 임시 저장.
+		System.out.println("글 번호 :"+board_num);
+		updSupport_boardNum = board_num;
+		System.out.println(updSupport_boardNum);
+	}
+}

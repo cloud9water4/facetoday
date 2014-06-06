@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>네이버 책 검색 OpenAPI 예제</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+	var params = {
+		"target" : "local",
+		"query" : "",
+		"display" : 5
+	} // OpenAPI 요청변수 정의
+	function callOpenAPI() {
+		params.query = $("#query").val();
+		var q = $.param(params);
+		var ajax_url = "api_proxy.jsp?" + q; // OpenAPI 요청 URL 구성
+		$.ajax({
+			type : "get",
+			url : ajax_url,
+			contentType : "text/xml; charset=utf-8",
+			dataType : "xml",
+			error : function(xhr, status, error) {
+				alert("error : " + status);
+			},
+			success : showResult
+		}); // Ajax 호출 및 이벤트 핸들러 함수 정의
+	}
+	function showResult(xml) {// Ajax 호출 성공시 실행되는 함수
+		var totalCount = $(xml).find("total").text(); // <total>값 추출
+		$("#result").text(totalCount + "건 검색"); // <total>값 표시
+		$(xml).find("rss").find("channel").find("item").each(function(idx) {
+			var title = $(this).find("title").text(); // <title>값 추출
+			$("#result").append("<br/>" + title); // <title>값 표시
+		});
+	}
+</script>
+<script>
+// 다음 단계에서 여기에 Ajax 처리 스크립트를 넣을 것
+</script>
+<body>
+<input type="text" id="query" />
+<input type="button" onclick="callOpenAPI()" value="네이버 책 검색 OpenAPI 호출" />
+<div id="result"></div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+<title>Test Web Page</title>
+
+<!-- Bootstrap core CSS -->
+<link href="resource/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/site.min.css">
+
+<!-- Custom styles for this template -->
+<link href="blog.css" rel="stylesheet">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		//글 등록
+		$("#btnPost").click(function(){
+			$.ajax({
+				url:"insert.do",
+				type:"post",
+				dataType:"text",
+				data:$("#inputPost").serialize(),
+				success:function(data) {
+					if(data >0) {
+						alert("등록되었습니다.");
+						$("input[type=text]").val("");
+						getData();
+					} else {
+						alert("등록하는 과정에서 오류가 발생했습니다.");
+					}
+				},
+				error: function (data) {
+					alert("data 읽기 오류");
+				}
+			});
+		});
+		
+		function getData() {
+			$.ajax({
+				url:"select.do",
+				type:"post",
+				dataType:"json",
+				success:function(data) {
+					var table="";
+					
+				    $("#listTable tr:gt(0)").remove();
+					$(data.list).each(function(index,item){
+						table+="<tr>"
+						table+="<td><img class='media-object img-rounded' src='testPic/photo-1.jpg'></td>"
+						table+="<td><h6>정동구</h6>"+item.content+"</td>";
+						table+="<td><h6>"+item.write_date+"</h6></td>";
+				    	table+="<td><input class='btn bnt-link' type='button' value='삭제' id='del' name='"+item.content+"'></td>";
+						table+="</tr>"
+					});
+					
+				    $("#listTable tr:eq(0)").after(table);
+				},
+				error : function(err){
+					alert("데이터를 가져오는 중 오류가 발생했습니다.");
+				}
+			});
+		}
+		
+		
+		$(document).on("click","#del", function(){ 
+			$.ajax({
+				url:"delete.do",
+				type:"post",
+				dataType : "text", 
+				data: "content="+ $(this).attr("name"),
+				
+				success : function(data){
+					if(data>0){
+						alert("삭제되었습니다.");
+						getData();
+					}else{
+						alert("으아 안 됨");
+						alert("삭제되지 않았습니다.");
+					}
+				 },
+				 error : function(err){
+					 alert("삭제하는 과정에서 오류가 발생했습니다.");
+					 alert("삭제되지 않았습니다.");
+				 } 
+			   });
+		   });
+		getData();
+	});
+</script>
+	
+<body>
+	<div class="blog-masthead">
+		<div class="container">
+			<nav class="blog-nav">
+				<a class="blog-nav-item active" href="#">Home</a> <a
+					class="blog-nav-item" href="#">New features</a> <a
+					class="blog-nav-item" href="#">Press</a> <a class="blog-nav-item"
+					href="#">New hires</a> <a class="blog-nav-item" href="#">About</a>
+			</nav>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="blog-header">
+			<h1 class="blog-title">Test SNS</h1>
+			<p class="lead blog-description">Test is started. Sunday,
+				2014.3.23</p>
+		</div>
+
+		<div class="row">
+
+			<div class="col-sm-8 blog-main">
+			
+				<!-- 새 글 작성 -->
+				<form class="input-group" name="insert.do" method="post" id="inputPost">
+					<input type="text" class="form-control" placeholder="새 글 작성하기" name="content" id="content"> 
+					<span class="input-group-btn">
+						<input class="btn btn-default" type="button" id="btnPost" value="Go!">
+					</span>
+				</form>
+				<p />
+				
+				<!-- 글 목록 나오기 -->
+				<table class="table table-hover" id="listTable">
+					<tr>
+						<td><p class="text-center">내 담벼락</p></td>
+					</tr>
+				</table>
+				<p />
+				
+				<!-- 미디어 -->
+				<!-- <div class="media">
+					<a class="pull-left" href="#"> 
+						<img class="media-object img-rounded" src="testPic/photo-1.jpg" alt="...">
+					</a>
+					<div class="media-body" id="listMedia">
+						<h4 class="media-heading">Media heading</h4>
+					</div>
+				</div> -->
+				
+			</div>
+			<!-- /.blog-main -->
+
+			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				
+				<!-- 개인 정보 설정 -->
+				<div class="media">
+					<a class="pull-left" href="#"> 
+						<img class="media-object img-rounded" src="testPic/photo-1.jpg">
+					</a>
+					<div class="media-body">
+						<h4 class="media-heading">정동구</h4>
+						<a href="main.jsp"><h6>프로필 편집</h6></a>
+					</div>
+				</div>
+				
+				<div class="sidebar-module">
+					<h4>Archives</h4>
+					<ol class="list-unstyled">
+						<li><a href="#">January 2014</a></li>
+						<li><a href="#">December 2013</a></li>
+						<li><a href="#">November 2013</a></li>
+						<li><a href="#">October 2013</a></li>
+						<li><a href="#">September 2013</a></li>
+						<li><a href="#">August 2013</a></li>
+						<li><a href="#">July 2013</a></li>
+						<li><a href="#">June 2013</a></li>
+						<li><a href="#">May 2013</a></li>
+						<li><a href="#">April 2013</a></li>
+						<li><a href="#">March 2013</a></li>
+						<li><a href="#">February 2013</a></li>
+					</ol>
+				</div>
+				<div class="sidebar-module">
+					<h4>Elsewhere</h4>
+					<ol class="list-unstyled">
+						<li><a href="#">GitHub</a></li>
+						<li><a href="#">Twitter</a></li>
+						<li><a href="#">Facebook</a></li>
+					</ol>
+				</div>
+			</div>
+			<!-- /.blog-sidebar -->
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container -->
+
+	<div class="blog-footer">
+		<p>
+			Test for Spring Web MVC, <a href="wesdw2002@naver.com">DG Jung</a>.
+		</p>
+		<p>
+			<a href="#">Back to top</a>
+		</p>
+	</div>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="resource/js/bootstrap.min.js"></script>
+</body>
+</html>

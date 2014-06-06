@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 외부 db연결 가져오기 -->
+	<properties resource="facetoday/config/dbConnection.properties" />
+
+	<!-- 클래스들의 전체경로에 이름(별칭) 만들기 -->
+	<typeAliases>
+		<typeAlias type="facetoday.spring.web.vo.BoardVo" alias="boardVo" />
+		<typeAlias type="facetoday.spring.web.vo.MemberVo" alias="memberVo" />
+		<typeAlias type="facetoday.spring.web.vo.MorphologyVo" alias="MorphologyVo"/>
+		<typeAlias type="facetoday.spring.web.vo.BoardJoinMemberVo" alias="BoardJoinMemberVo"/>
+		<typeAlias type="facetoday.spring.web.vo.SongVo" alias="songVo"/>
+		<typeAlias type="facetoday.spring.web.vo.TagVo" alias="tagVo"/>
+		<typeAlias type="facetoday.spring.web.vo.ImageVo" alias="imageVo"/>
+		<typeAlias type="facetoday.spring.web.vo.BoardsImagesLink" alias="BoardsImagesLink"/>
+		<typeAlias type="facetoday.spring.web.vo.CommentVo" alias="commentVo"/>
+		<typeAlias type="facetoday.spring.web.vo.SongListVo" alias="songListVo"/>
+		<typeAlias type="facetoday.spring.web.vo.FriendsVo" alias="friendsVo"/>
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${userpass}" />
+				<property name="poolMaximumActiveConnections" value="10" />
+				<property name="poolMaximumIdleConnections" value="5" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="facetoday/config/BoardMapper.xml" />
+		<mapper resource="facetoday/config/SongMapper.xml"/>
+		<mapper resource="facetoday/config/MemberMapper.xml"/>
+		<mapper resource="facetoday/config/CommentMapper.xml"/>
+	</mappers>
+</configuration>

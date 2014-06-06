@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<!-- 글 등록 -->
+	<insert id="boardInsert" parameterType="boardVo">
+		INSERT INTO board VALUES (null,'wesdw2002@naver.com',SYSDATETIME,#{content},#{tag},#{filename},#{location},#{state},#{keyword});
+	</insert>
+	
+	<!-- 글 전체 출력 -->
+	<select id="boardSelectAll" resultType="boardVo">
+		select * from
+		board where email='wesdw2002@naver.com' order by board_num DESC
+	</select>
+	
+	<!-- 글 삭제 -->
+	<delete id="boardDelete" parameterType="int">
+		delete from board where board_num = #{board_num}
+	</delete>
+	
+	<!-- 글 수정 -->
+	<update id="boardUpdate" parameterType="boardVo">
+		UPDATE board
+		SET content=#{content}
+		WHERE board_num=#{board_num}
+	</update>
+	
+	<!-- 형태소리스트 출력 -->
+	<select id="morphologyList" resultType="MorphologyVo">
+		select * from emotion
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="memberVo">
+		insert into Member values (#{email},#{name},#{passwd},#{birth})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="String"  resultType="memberVo">
+		select * from member where email=#{email}
+	</select>
+</mapper>

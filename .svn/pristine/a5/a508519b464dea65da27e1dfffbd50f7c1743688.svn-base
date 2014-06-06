@@ -1,0 +1,132 @@
+package facetoday.spring.service;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import facetoday.service.MorphologicalAnalysis;
+import facetoday.service.PwdEncryption;
+import facetoday.spring.web.dao.BoardDao;
+import facetoday.spring.web.vo.BoardVo;
+import facetoday.spring.web.vo.MemberVo;
+import facetoday.spring.web.vo.MorphologyVo;
+
+public class BoardServiceImpl implements BoardService {
+
+	@Resource(name = "boardDao")
+	private BoardDao boardDao;
+	
+	MorphologicalAnalysis mAnalysis = new MorphologicalAnalysis();
+	
+	/**
+	 * 글 저장
+	 */
+	@Override
+	public int boardInsert(BoardVo vo) {
+		
+		// TODO Auto-generated method stub
+		List<String> list = null;
+		List<MorphologyVo> morphologyList;
+		
+		try {
+			morphologyList = MorphologyList();
+			
+			int state = 0;
+			
+			System.out.println("유입된 문장 : " + vo.getContent());
+			list = mAnalysis.morphologicalAnalysis(vo.getContent());
+			
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i));
+				for (int j = 0; j < morphologyList.size(); j++ ) {
+					if (list.get(i).equals(morphologyList.get(j).getF_word())){
+						vo.setKeyword(morphologyList.get(j).getF_word());
+						System.out.println("값 :"+morphologyList.get(j).getState());
+						state = state + morphologyList.get(j).getState();
+					}
+				}
+			}
+			
+			System.out.println("기분값 : "+state);
+			vo.setState(state);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return boardDao.boardInsert(vo);
+	}
+	
+	@Override
+	public int memberInsert(MemberVo memberVo) throws SQLException {
+		int result = boardDao.memberInsert(memberVo);
+		
+		if (result == 0) {
+			throw new SQLException("가입하는 중 오류가 발생했습니다.");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 형태소 목록 추출. 나중에 로그인할 때 최초 한 번만 추출하기.
+	 */
+	@Override
+	public List<MorphologyVo> MorphologyList() throws SQLException {
+		
+		List<MorphologyVo> morphologyList = boardDao.MorphologyList();
+		
+		if (morphologyList.isEmpty()) {
+			throw new SQLException("형태소 목록을 가져오는 중 오류가 발생했습니다.");
+		}
+		return morphologyList;
+	}
+
+	/**
+	 * 저장된 글 담벼락 구성
+	 */
+	@Override
+	public List<BoardVo> boardSelectAll() {
+		// TODO Auto-generated method stub
+		return boardDao.boardSelectAll();
+	}
+
+	/**
+	 * 해당 글 삭제하기
+	 */
+	public int boardDelete(int board_num) {
+		return boardDao.boardDelete(board_num);
+	}
+	
+	/**
+	 * 글 내용 수정하기
+	 */
+	@Override
+	public int boardUpdate(BoardVo boardVo) {
+		// TODO Auto-generated method stub
+		return boardDao.boardUpdate(boardVo);
+	}
+	
+	/**
+	 * 로그인 과정
+	 */
+	@Override
+	public MemberVo login(String email, String passwd) throws SQLException {
+		
+		List<MemberVo> list = boardDao.login(email);
+		MemberVo memberVo = null;
+		
+		if(list.isEmpty()) {
+			throw new SQLException("없는 이메일입니다.");
+		} else {
+			if(PwdEncryption.pwdCode(passwd).equals(list.get(0).getPasswd()))
+				memberVo = new MemberVo(list.get(0).getEmail(),list.get(0).getName(),list.get(0).getPasswd(),list.get(0).getBirth());
+			else
+				throw new SQLException("비밀번호가 일치하지 않습니다.");
+		}
+		
+		return memberVo;
+	}
+}

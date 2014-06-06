@@ -1,0 +1,29 @@
+@CHARSET "EUC-KR";
+
+#close {
+	width: 50px;
+	text-align:center;
+	height: 30px;
+}
+
+#update {
+	width: 50px;
+	text-align:center;
+	height: 30px;
+}
+
+.modal-backdrop {
+    z-index: 1030;
+    background-color: #243342;
+}
+
+.modal-backdrop.in {
+    opacity: .70;
+    filter: alpha(opacity=95);
+}
+
+.modal-dialog {
+	position: absolute;
+	left: 30%; 
+	top: 30%;
+}

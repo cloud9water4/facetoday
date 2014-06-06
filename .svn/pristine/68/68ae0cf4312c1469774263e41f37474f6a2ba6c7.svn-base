@@ -1,0 +1,184 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+<!-- Bootstrap core CSS -->
+<link href="resource/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/site.min.css">
+
+<!-- Custom styles for this template -->
+<link href="blog.css" rel="stylesheet">
+<link href="css/donggu.css" rel="stylesheet">
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">	
+	google.load("visualization", "1", {packages : [ "corechart" ]});
+	google.setOnLoadCallback(drawChart);
+	
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+				[ 'Time', 'KimEuihyun', '평균' ], [ '00', 1000, 700 ],
+				[ '04', 1170, 700 ], [ '08', 100, 700 ], [ '12', 1030, 700 ],
+				[ '16', 1000, 700 ], [ '20', 1170, 700 ], [ '24', 660, 700 ] ]);
+
+		var options = {
+			title : 'feelings',
+			curveType : 'function',
+			aggregationTarget : 'none',
+			animation : {
+				easing : 'inAndOut'
+			},
+			legend : {
+				position : 'bottom'
+			}
+		};
+
+		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	}
+	
+	$(document).ready(function(){	
+		function getData() {
+			$.ajax({
+				url:"emotion.do",
+				type:"post",
+				dataType:"json",
+				success:function(data) {
+					var table="";
+					
+				    $("#listTable tr:gt(0)").remove();
+					$(data.list).each(function(index,item){
+						table+="<tr>";
+						table+="<td>"+item.content+"</td>";
+						table+="<td><h6>"+item.write_date+"</h6></td>";
+						table+="<td><h6>"+item.write_date+"</h6></td>";
+						table+="</tr>";
+					});
+					
+				    $("#listTable tr:eq(0)").after(table);
+				},
+				error : function(err){
+					alert("데이터를 가져오는 중 오류가 발생했습니다.");
+				}
+			});
+		}		
+		getData();
+	});
+</script>
+
+<title>Test Web Page</title>
+</head>
+
+<body>
+	<div class="blog-masthead">
+		<div class="container">
+			<nav class="blog-nav">
+				<a class="blog-nav-item" href="index.html">Home</a> 
+				<a class="blog-nav-item" href="main.jsp">My letters</a> 
+				<a class="blog-nav-item active" href="#">My emotion</a> 
+			</nav>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="blog-header">
+			<h1 class="blog-title">My emotion</h1>
+			<p class="lead blog-description">Test is started. Saturday,
+				2014.4.5</p>
+		</div>
+
+		<div class="row">
+
+			<div class="col-sm-8 blog-main">
+				<!-- 그래프 -->		
+				<div id="chart_div"></div> <p/>
+				
+				<!-- 테이블-->
+				<table class="table table-hover" id="listTable">
+					<tr>
+						<td>시간</td>
+						<td>주요 키워드</td>
+						<td>예상 수치</td>
+					</tr>
+					
+				</table>
+				
+			</div>
+			<!-- /.blog-main -->
+
+			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				
+				<!-- 개인 정보 설정 -->
+				<div class="media">
+					<a class="pull-left" href="#"> 
+						<img class="media-object img-rounded" src="testPic/photo-1.jpg">
+					</a>
+					<div class="media-body">
+						<h4 class="media-heading">정동구</h4>
+						<a href="main.jsp"><h6>프로필 편집</h6></a>
+					</div>
+				</div>
+				
+				<div class="sidebar-module">
+					<h4>Archives</h4>
+					<ol class="list-unstyled">
+						<li><a href="#">January 2014</a></li>
+						<li><a href="#">December 2013</a></li>
+						<li><a href="#">November 2013</a></li>
+						<li><a href="#">October 2013</a></li>
+						<li><a href="#">September 2013</a></li>
+						<li><a href="#">August 2013</a></li>
+						<li><a href="#">July 2013</a></li>
+						<li><a href="#">June 2013</a></li>
+						<li><a href="#">May 2013</a></li>
+						<li><a href="#">April 2013</a></li>
+						<li><a href="#">March 2013</a></li>
+						<li><a href="#">February 2013</a></li>
+					</ol>
+				</div>
+				<div class="sidebar-module">
+					<h4>Elsewhere</h4>
+					<ol class="list-unstyled">
+						<li><a href="#">GitHub</a></li>
+						<li><a href="#">Twitter</a></li>
+						<li><a href="#">Facebook</a></li>
+					</ol>
+				</div>
+			</div>
+			<!-- /.blog-sidebar -->
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container -->
+
+	<div class="blog-footer">
+		<p>
+			Test for Spring Web MVC, <a href="wesdw2002@naver.com">DG Jung</a>.
+		</p>
+		<p>
+			<a href="#">Back to top</a>
+		</p>
+	</div>
+	
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="resource/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/spin.min.js"></script>
+	
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+<title>FaceToday</title>
+
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- custom CSS -->
+<link href="css/index_donggu.css" rel="stylesheet">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btnJoin").click(function(){
+			alert("회원가입 완료되었습니다.");
+			$.ajax({
+				url:"join.do",
+				type:"post",
+				dataType:"text",
+				data:$("#joinMember").serialize()
+			});
+		});
+	});
+</script>
+	
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+		id="bar">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> FaceToday</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<form class="navbar-form navbar-right" role="form" id="signin" action="signin.do" method="post">
+					<div class="form-group">
+						<input type="text" placeholder="Email" name="signEmail" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="password" placeholder="Password" name="signPasswd" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success">Sign in</button>
+				</form>
+			</div>
+			<!--/.navbar-collapse -->
+		</div>
+	</div>
+
+	<!-- modern slide -->
+	<section class="container">
+		<div id="myCarousel" class="carousel slide">
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1" class=""></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="img/slide1.jpg" alt="">
+					<div class="carousel-caption">
+						<a class="btn btn-lg" href="#sign-up" role="button"
+							data-toggle="modal">Click here to join!</a>
+						<h4>지금 facetoday에 가입하세요.</h4>
+						<p>facetoday는 어쩌고 저쩌고 쏼라쏼라 설명facetoday는 어쩌고 저쩌고 쏼라쏼라
+							설명facetoday는 어쩌고 저쩌고 쏼라쏼라 설명.</p>
+					</div>
+				</div>
+				<div class="item">
+					<img src="img/slide2.jpg" alt="">
+					<div class="carousel-caption">
+						<h4>First Thumbnail label</h4>
+						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
+							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
+							dolor id nibh ultricies vehicula ut id elit.</p>
+					</div>
+				</div>
+				<div class="item">
+					<img src="img/slide3.jpg" alt="">
+					<div class="carousel-caption">
+						<h4>First Thumbnail label</h4>
+						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
+							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
+							dolor id nibh ultricies vehicula ut id elit.</p>
+					</div>
+				</div>
+			</div>
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span class="glyphicon icon-chevron-left"></span>
+			</a> <a class="right carousel-control" href="#myCarousel"
+				data-slide="next"> <span class="glyphicon icon-chevron-right"></span>
+			</a>
+		</div>
+
+		<!-- 회원 가입 modal-->
+		<div class="modal fade" id="sign-up" tabindex="-1"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<form method="post" enctype="multipart/form-data" id="joinMember">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h3 id="myModalLabel">회원가입</h3>
+							</div>
+							<div class="form-group">
+								<!-- Username -->
+								<label class="control-label" for="username">이름</label>
+								<div class="form-group">
+									<input type="text" id="username" name="username"
+										placeholder="이름,닉네임" class="form-control" required="">
+									<p class="help-block">문자와 숫자로 공백없이 입력해주시되, 닉네임도 가능합니다.</p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<!-- E-mail -->
+								<label class="control-label" for="email">E-mail</label>
+								<div class="form-group">
+									<input type="text" id="email" name="email" placeholder="이메일"
+										class="form-control">
+									<p class="help-block">이메일 주소를 입력해주세요.</p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<!-- Password-->
+								<label class="control-label" for="password">비밀번호</label>
+								<div class="form-group">
+									<input type="password" id="password" name="password"
+										placeholder="비밀번호" class="form-control">
+									<p class="help-block">비밀번호는 최소한 4 글자 이상으로 해주세요.</p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<!-- Password -->
+								<label class="control-label" for="password_confirm">비밀번호(재입력)</label>
+								<div class="form-group">
+									<input type="password" id="password_confirm"
+										name="password_confirm" placeholder="비밀번호(재입력)"
+										class="form-control">
+									<p class="help-block">비밀번호를 다시 입력해주세요.</p>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<!-- Password-->
+								<label class="control-label" for="password">생년월일</label>
+								<div class="form-group">
+									<input type="date" id="birth" name="birth" class="form-control">
+									<p class="help-block">생년월일을 입력하세요.</p>
+								</div>
+							</div>
+							<div class='modal-footer'>
+								<button type="submit" id="btnJoin" class="btn btn-success">가입하기</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="container">
+
+			
+
+		</div>
+
+		<div class="footer">
+			<p>
+				Test for Spring Web MVC, <a href="mailto:wesdw2002@naver.com">DG Jung</a>.
+			</p>
+			<p>
+				<a href="#">Back to top</a>
+			</p>
+		</div>
+
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="resource/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/spin.min.js"></script>
+</body>
+</html>

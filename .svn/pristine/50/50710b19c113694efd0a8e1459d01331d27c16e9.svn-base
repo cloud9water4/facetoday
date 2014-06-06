@@ -1,0 +1,5 @@
+@CHARSET "EUC-KR";
+
+#joinMember input,password_confirm {
+	width: 180px;
+}

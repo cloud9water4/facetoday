@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<!-- 글 등록 -->
+	<insert id="boardInsert" parameterType="boardVo">
+		INSERT INTO boards VALUES (null,#{email},#{social},current_timestamp,#{content},#{lat},#{lon},#{state},#{keyword},#{image},#{tagString},0);
+	</insert>
+
+	<!-- 글 전체 출력 -->
+	<select id="boardSelectAll" parameterType="memberVo" resultType="BoardJoinMemberVo">
+		select DISTINCT boards.board_num,members.name,boards.email,boards.social,boards.write_date,boards.content,lat,lon,state,keyword,image,tagString,c_num 
+		from
+		boards join members on members.email = boards.email AND members.social = boards.social
+		LEFT JOIN comments ON boards.email = comments.email AND boards.social = comments.social AND boards.board_num = comments.board_num
+		where boards.email in (select emailFriend from friends where email=#{email} and social=#{social})
+		order by boards.board_num DESC 
+	</select>
+	
+	<!-- 내 글 출력 -->
+	<select id="boardSelectMe" parameterType="memberVo" resultType="BoardJoinMemberVo">
+		SELECT DISTINCT boards.board_num,members.name,boards.email,boards.social,boards.write_date,boards.content,lat,lon,state,keyword,image,tagString, c_num 
+		from
+		boards join members on members.email = boards.email AND members.social = boards.social AND members.email=#{email} AND MEMBERS.social=#{social} 
+		LEFT JOIN comments ON boards.email = comments.email AND boards.social = comments.social AND boards.board_num = comments.board_num
+		order by boards.board_num DESC 
+	</select>
+
+	<!-- 글 삭제 -->
+	<delete id="boardDelete" parameterType="int">
+		delete from boards where board_num = #{board_num}
+	</delete>
+	
+	<!-- 글 수정 -->
+	<update id="boardUpdate" parameterType="boardVo">
+		UPDATE boards
+		SET content=#{content}
+		WHERE board_num=#{board_num}
+	</update>
+	
+	<!-- 형태소리스트 출력 -->
+	<select id="morphologyList" resultType="MorphologyVo">
+		select * from emotion
+	</select>
+	
+	<!-- 기분 변화 관련 -->
+	<select id="selectEmotion" parameterType="memberVo" resultType="boardVo">
+		select write_date,keyword,state from boards where email=#{email} and social=#{social} and state not in(0);
+	</select>
+	
+	<!-- 이미지테이블 이미지 저장 -->
+	<insert id="imageInsert" parameterType="imageVo">
+		INSERT INTO images VALUES (null,#{email},#{social},#{image});
+	</insert>
+	
+	<!-- 이미지파일 이름으로 image_num 추출 -->
+	<select id="imageExtract" parameterType="String" resultType="int">
+		SELECT image_num from images where image=#{image}
+	</select>
+	
+	<!-- 이미지 리스트 생성 -->
+	<select id="imageList" parameterType="memberVo" resultType="boardVo">
+		SELECT tagString,write_date,content,image FROM boards WHERE image NOT IN ('') AND email=#{email} AND social=#{social} limit 10; 
+	</select>
+	
+	<!-- 포토월 생성 -->
+	<select id="photoWall" parameterType="MemberVo" resultType="imageVo">
+		SELECT * from images where email=#{email} AND social=#{social} order by image_num DESC;
+	</select>
+</mapper>
