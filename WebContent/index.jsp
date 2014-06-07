@@ -18,14 +18,14 @@
 <link href="css/docs.min.css" rel="stylesheet">
 <link href="css/offcanvas.css" rel="stylesheet">
 <link href="css/blog.css" rel="stylesheet">
-
+<link href="css/jumbotron.css" rel="stylesheet">
 
 <!-- custom CSS -->
 <link href="css/index_donggu.css" rel="stylesheet">
 
 <style>
 img.bg {
-	min-height: 100%;
+	min-height: 60%;
 	min-width: 1024px;
 	width: 100%;
 	height: 40%; /* auto */
@@ -76,63 +76,25 @@ img.bg {
 			<!--/.navbar-collapse -->
 		</div>
 	</div>
-	<p/>				
-	<!-- modern slide -->
+	<p/>			
+<!-- 	<img src="testPic/02.jpg" class="bg">
+ -->
+	<div class="jumbotron" style="width:100%; height:100%; text-align:center; background-image:url(testPic/02.jpg);">
 	
-	<img src="testPic/02.jpg" class="bg">
-	<section class="container">
 		<!--  이 주의 노래 -->
-		<h1 align="center">Welcome to FaceToday</h1>
-	
-		<iframe width="950" height="320" src="//www.youtube.com/embed/TI0DGvqKZTI"></iframe>
-				
-		<!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-	<div id="myCarousel" class="carousel slide">
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1" class=""></li>
-				<li data-target="#myCarousel" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="item active">
-					<img src="img/slide1.jpg" alt="">
-					<div class="carousel-caption">
-						<a class="btn btn-lg" href="#sign-up" role="button"
-							data-toggle="modal">Click here to join!</a>
-						<h4>지금 facetoday에 가입하세요.</h4>
-						<p>facetoday는 어쩌고 저쩌고 쏼라쏼라 설명facetoday는 어쩌고 저쩌고 쏼라쏼라
-							설명facetoday는 어쩌고 저쩌고 쏼라쏼라 설명.</p>
-					</div>
-				</div>
-				<div class="item">
-					<img src="img/slide2.jpg" alt="">
-					<div class="carousel-caption">
-						<h4>First Thumbnail label</h4>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
-							dolor id nibh ultricies vehicula ut id elit.</p>
-					</div>
-				</div>
-				<div class="item">
-					<img src="img/slide3.jpg" alt="">
-					<div class="carousel-caption">
-						<h4>First Thumbnail label</h4>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
-							dolor id nibh ultricies vehicula ut id elit.</p>
-					</div>
-				</div>
-			</div>
-			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-				<span class="glyphicon icon-chevron-left"></span>
-			</a> <a class="right carousel-control" href="#myCarousel"
-				data-slide="next"> <span class="glyphicon icon-chevron-right"></span>
-			</a>
+		<div class="container">
+		<div class="col-sm-6">
+		<iframe width="470" height="320" src="//www.youtube.com/embed/TI0DGvqKZTI"></iframe>
 		</div>
+		<!-- commentview modal -->
+		<div class="col-sm-6">
+		<iframe width="470" height="320" src="firstComment.jsp"></iframe>
+		</div>
+		</div>
+	</div>
+		
+	
     <div class="container marketing">
-	<br/><br/><br/>
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="col-lg-4">
@@ -264,7 +226,7 @@ img.bg {
 				</div>
 			</div>
 		</div>
-		</section>
+	
 
 		<!-- Footer
 ================================================== -->
@@ -273,59 +235,47 @@ img.bg {
 				<div class="bs-docs-social">
 					<ul class="bs-docs-social-buttons">
 						<li><iframe class="github-btn"
-								src="http://ghbtns.com/github-btn.html?user=twbs&amp;repo=bootstrap&amp;type=watch&amp;count=true"
+								src="http://ghbtns.com/github-btn.html?user=cloud9water4&amp;repo=facetoday&amp;type=watch&amp;count=true"
 								width="100" height="20" title="Star on GitHub"></iframe></li>
 						<li><iframe class="github-btn"
-								src="http://ghbtns.com/github-btn.html?user=twbs&amp;repo=bootstrap&amp;type=fork&amp;count=true"
+								src="http://ghbtns.com/github-btn.html?user=cloud9water4&amp;repo=facetoday&amp;type=fork&amp;count=true"
 								width="102" height="20" title="Fork on GitHub"></iframe></li>
-						<li class="follow-btn"><a
+						<!-- <li class="follow-btn"><a
 							href="https://twitter.com/twbootstrap"
 							class="twitter-follow-button" data-link-color="#0069D6"
-							data-show-count="true">Follow @twbootstrap</a></li>
+							data-show-count="true">Follow @twbootstrap</a></li> -->
 						<li class="tweet-btn"><a href="https://twitter.com/share"
-							class="twitter-share-button" data-url="http://getbootstrap.com/"
+							class="twitter-share-button"
 							data-count="horizontal" data-via="twbootstrap"
-							data-related="mdo:Creator of Bootstrap">Tweet</a></li>
+							target="_blank">Tweet</a></li>
 					</ul>
 				</div>
-
-
+				
 				<p>
-					Designed and built with all the love in the world by <a
-						href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a
-						href="http://twitter.com/fat" target="_blank">@fat</a>.
-				</p>
-				<p>
-					Maintained by the <a href="https://github.com/twbs?tab=members">core
+					Maintained by the <a href="https://github.com/cloud9water4?tab=members" target="_blank">core
 						team</a> with the help of <a
-						href="https://github.com/twbs/bootstrap/graphs/contributors">our
+						href="https://github.com/cloud9water4/facetoday/graphs/contributors">our
 						contributors</a>.
 				</p>
 				<p>
 					Code licensed under <a
-						href="https://github.com/twbs/bootstrap/blob/master/LICENSE"
-						target="_blank">MIT</a>, documentation under <a
+						href="https://github.com/cloud9water4/facetoday/blob/master/LICENSE"
+						target="_blank">BSD</a>, documentation under <a
 						href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
 				</p>
 				<ul class="bs-docs-footer-links muted">
-					<li>Currently v3.1.1</li>
+					<li>Currently v1.0.0</li>
 					<li>&middot;</li>
-					<li><a href="https://github.com/twbs/bootstrap">GitHub</a></li>
+					<li><a href="https://github.com/cloud9water4/facetoday/" target="_blank">GitHub</a></li>
 					<li>&middot;</li>
-					<li><a href="../getting-started/#examples">Yobi</a></li>
-					<li>&middot;</li>
-					<li><a href="../2.3.2/">v2.3.2 docs</a></li>
+					<li><a href="http://yobi.d2fest.kr/cloud9water4/projectFacetoday" target="_blank">Yobi</a></li>
 					<li>&middot;</li>
 					<li><a href="../about/">About</a></li>
 					<li>&middot;</li>
-					<li><a href="http://expo.getbootstrap.com">Expo</a></li>
-					<li>&middot;</li>
-					<li><a href="http://blog.getbootstrap.com">Blog</a></li>
-					<li>&middot;</li>
 					<li><a
-						href="https://github.com/twbs/bootstrap/issues?state=open">Issues</a></li>
+						href="https://github.com/cloud9water4/facetoday/issues?state=open" target="_blank">Issues</a></li>
 					<li>&middot;</li>
-					<li><a href="https://github.com/twbs/bootstrap/releases">Releases</a></li>
+					<li><a href="https://github.com/cloud9water4/facetoday/releases" target="_blank">Releases</a></li>
 				</ul>
 			</div>
 		</footer>

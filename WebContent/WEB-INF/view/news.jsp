@@ -723,7 +723,8 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">프로필 편집</a></li>
 						<li><a href="#">음악 설정</a></li>
-						<li><a href="#">Something else here</a></li>
+						<li><a
+						href="https://github.com/cloud9water4/facetoday/issues?state=open" target="_blank">개발팀에게 문의하기</a></li>
 						<li class="divider"></li>
 						<li><a href="index.jsp">로그아웃</a></li>
 					</ul></li>
@@ -837,9 +838,6 @@
 	<!-- /.container -->
 	
 	<div class="blog-footer">
-		<p>
-			Test for Spring Web MVC, <a href="wesdw2002@naver.com">DG Jung</a>.
-		</p>
 		<p>
 			<a href="#">Back to top</a>
 		</p>

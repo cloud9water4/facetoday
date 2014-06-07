@@ -898,9 +898,6 @@ img.bg {
 
 	<div class="blog-footer">
 		<p>
-			Test for Spring Web MVC, <a href="wesdw2002@naver.com">DG Jung</a>.
-		</p>
-		<p>
 			<a href="#">Back to top</a>
 		</p>
 	</div>
